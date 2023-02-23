@@ -23,11 +23,28 @@ public class EditModel : PageModel
 	{
 		// Todo: Use repo to get address book entry, set UpdateAddressRequest fields.
 		var entry = _repo.FindById(id);
+		if (entry != null)
+		{
+			 UpdateAddressRequest = new UpdateAddressRequest()
+			{
+				Id = entry.Id,
+				Line1 = entry.Line1,
+				City = entry.City,
+				State = entry.State,
+				PostalCode = entry.PostalCode,
+			};
+		}
 	}
 
 	public ActionResult OnPost()
 	{
 		// Todo: Use mediator to send a "command" to update the address book entry, redirect to entry list.
+		if (ModelState.IsValid)
+		{
+            _ = await _mediator.Send(UpdateAddressRequest);
+            return RedirectToPage("Index");
+        }
+
 		return Page();
 	}
 }
