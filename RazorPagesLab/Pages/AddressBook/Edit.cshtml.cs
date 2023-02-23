@@ -22,6 +22,7 @@ public class EditModel : PageModel
 	public void OnGet(Guid id)
 	{
 		// Todo: Use repo to get address book entry, set UpdateAddressRequest fields.
+		var entry = _repo.FindById(id);
 	}
 
 	public ActionResult OnPost()
